@@ -18,11 +18,15 @@ module.exports = {
             chainId: 31337,
             blockConfirmations: 1,
         },
+        localhost: {
+            chainId: 31337,
+        },
         rinkeby: {
             chainId: 4,
             blockConfirmations: 6,
             accounts: [PRIVATE_KEY],
             url: RINKEBY_RPC_URL,
+            saveDeployments: true,
         },
     },
     namedAccounts: {

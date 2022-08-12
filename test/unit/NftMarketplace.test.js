@@ -22,10 +22,10 @@ const { developmentChain } = require("../../helper-hardhat-config");
               await basicNft.approve(nftMarketPlace.address, tokenId);
           });
           describe("List Item", () => {
-              it("emits an evenafter it has been successfully listed", async () => {
+              it("emits an event after it has been successfully listed", async () => {
                   await expect(nftMarketPlace.listItem(basicNft.address, tokenId, Price)).to.emit(
                       nftMarketPlace,
-                      "itemListed"
+                      "ItemListed"
                   );
               });
               it("revert when price is less than or equal to 0", async () => {
@@ -111,7 +111,7 @@ const { developmentChain } = require("../../helper-hardhat-config");
               it("Emit Item Cancelled event", async () => {
                   await expect(nftMarketPlace.cancelListing(basicNft.address, tokenId)).to.emit(
                       nftMarketPlace,
-                      "itemCanceled"
+                      "ItemCanceled"
                   );
               });
               it("Deleted successfully from Listing", async () => {
@@ -144,7 +144,7 @@ const { developmentChain } = require("../../helper-hardhat-config");
               it("Emits an event when updated", async () => {
                   await expect(
                       nftMarketPlace.updateListing(basicNft.address, tokenId, NEW_PRICE)
-                  ).to.emit(nftMarketPlace, "itemListed");
+                  ).to.emit(nftMarketPlace, "ItemListed");
               });
               it("Successfully Updates the price of the item", async () => {
                   const priceUpdate = await nftMarketPlace.updateListing(

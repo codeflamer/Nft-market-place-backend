@@ -23,7 +23,7 @@ contract NftMarketplace is ReentrancyGuard {
     mapping(address => uint256) private s_proceeds;
 
     //EVENTS
-    event itemListed(
+    event ItemListed(
         address indexed sender,
         address indexed nftAddress,
         uint256 indexed tokenId,
@@ -37,7 +37,7 @@ contract NftMarketplace is ReentrancyGuard {
         uint256 price
     );
 
-    event itemCanceled(address indexed seller, address indexed nftAddress, uint256 indexed tokenId);
+    event ItemCanceled(address indexed seller, address indexed nftAddress, uint256 indexed tokenId);
 
     //MODIFIERS
     modifier notListed(
@@ -93,7 +93,7 @@ contract NftMarketplace is ReentrancyGuard {
             revert NftMarketplace__NotApprovedForMarketPlace();
         }
         s_listings[nftAddress][tokenId] = Listing(msg.sender, price);
-        emit itemListed(msg.sender, nftAddress, tokenId, price);
+        emit ItemListed(msg.sender, nftAddress, tokenId, price);
     }
 
     function buyItem(address nftAddress, uint256 tokenId)
@@ -119,7 +119,7 @@ contract NftMarketplace is ReentrancyGuard {
         isOwner(nftAddress, tokenId, msg.sender)
     {
         delete (s_listings[nftAddress][tokenId]);
-        emit itemCanceled(msg.sender, nftAddress, tokenId);
+        emit ItemCanceled(msg.sender, nftAddress, tokenId);
     }
 
     function updateListing(
@@ -128,7 +128,7 @@ contract NftMarketplace is ReentrancyGuard {
         uint256 newPrice
     ) external nonReentrant isListed(nftAddress, tokenId) isOwner(nftAddress, tokenId, msg.sender) {
         s_listings[nftAddress][tokenId].price = newPrice;
-        emit itemListed(msg.sender, nftAddress, tokenId, newPrice);
+        emit ItemListed(msg.sender, nftAddress, tokenId, newPrice);
     }
 
     function withdrawProceeds() external {

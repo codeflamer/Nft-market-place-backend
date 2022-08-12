@@ -1,9 +1,10 @@
-const { ethers, deployments } = require("hardhat");
+const { ethers, network } = require("hardhat");
+const { moveBlocks } = require("../utils/move-blocks");
 
 const PRICE = ethers.utils.parseEther("0.1");
 
 const mintAndList = async () => {
-    // await deployments.fixture(["all"]);
+    await deployments.fixture(["all"]);
     const nftMarketPlace = await ethers.getContract("NftMarketplace");
     const basicNft = await ethers.getContract("BasicNft");
 
@@ -20,6 +21,11 @@ const mintAndList = async () => {
     const listingTx = await nftMarketPlace.listItem(basicNft.address, tokenId, PRICE);
     await listingTx.wait();
     console.log("Listed!");
+    console.log(nftMarketPlace.address);
+
+    // if (network.config.chainId.toString() === "31337") {
+    //     await moveBlocks(2, (sleepAmount = 1000));
+    // }
 };
 
 mintAndList()
